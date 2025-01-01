@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Doto Font */
+.font-doto {
+  font-family: "Doto", serif;
+  font-variation-settings: "ROND" 0;
+}
+
+/* Exo 2 Font */
+.font-exo-2 {
+  font-family: "Exo 2", serif;
+}
+
+/* Hubot Sans Font */
+.font-hubot {
+  font-family: "Hubot Sans", serif;
+}
+
+/* Lacquer Font */
+.font-lacquer {
+  font-family: "Lacquer", serif;
+}
+
+/* Nunito Font */
+.font-nunito {
+  font-family: "Nunito", serif;
+}
+
+/* Sour Gummy Font */
+.font-sour-gummy {
+  font-family: "Sour Gummy", serif;
+}
