@@ -15,7 +15,7 @@
     "react": "^18.3",
     "react-dom": "^18.3",
     "react-router-dom": "^7.1.1",
-    "thirdweb": "^5"
+    "thirdweb": "^5.80.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
