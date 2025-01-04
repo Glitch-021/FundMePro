@@ -7,6 +7,8 @@ import {
   useContractWrite,
 } from "@thirdweb-dev/react";
 import { abi } from "../constants/index";
+import { formatEther } from "ethers/lib/utils";
+import { ethers } from "ethers";
 
 const StateContext = createContext();
 
@@ -33,7 +35,7 @@ export const StateContextProvider = ({ children }) => {
           form.description,
           form.image,
           form.target,
-          new Date(form.deadline).getTime()
+          new Date(form.deadline).getTime(),
         ],
       });
       console.log("Contract call success! 🍾", data);
@@ -44,6 +46,38 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  let cachedCampaigns = null;
+  const getCampagins = async () => {
+    const campagins = await contract.call("getCampaigns");
+
+    if (!cachedCampaigns) {
+      cachedCampaigns = campagins.map((campagin, i) => ({
+        owner: campagin.owner,
+        title: campagin.title,
+        description: campagin.description,
+        target: ethers.utils.formatEther(campagin.target.toString()),
+        deadline: campagin.deadline.toNumber(),
+        amountCollected: ethers.utils.formatEther(
+          campagin.amountCollected.toString()
+        ),
+        image: campagin.image,
+        pId: i,
+      }));
+    }
+
+    return cachedCampaigns;
+  };
+
+  const getUserCampaign = async () => {
+    const allCampaigns = await getCampagins();
+
+    const filteredCampaigns = allCampaigns.filter(
+      (campaign) => campaign.owner === address
+    );
+
+    return filteredCampaigns;
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -51,6 +85,8 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         createCampaign: publishCampaign,
+        getCampagins,
+        getUserCampaign,
       }}
     >
       {children}
